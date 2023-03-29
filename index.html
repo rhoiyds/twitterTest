@@ -14,9 +14,34 @@
         <meta name="twitter:card" content="summary_large_image" >
         <meta name="twitter:image" content="https://cdn.mybadge.playvalorant.com/og/PcYaIPwAjm.jpeg" >
         <meta property="og:url" content="https://rhoiyds.github.io/twitterTest" >
+        <script>
+            const blobUrlToFile = (blobUrl) => new Promise((resolve) => {
+                fetch(blobUrl).then((res) => {
+                  res.blob().then((blob) => {
+                    const file = new File([blob], `test.mp4`, {type: blob.type})
+                    resolve(file)
+                  })
+                }).catch(err => console.error(err))
+            })
+            
+            const deviceNativeShare = async () => {
+            
+                const shareData = {
+                    files: [await blobUrlToFile("https://rhoiyds.github.io/twitterTest/test.mp4")]
+                }
+            
+                try {
+                    await navigator.share(shareData);
+                  } catch (err) {
+                    console.log(`Error: ${err}`)
+                  }
+            }            
+            
+            </script>
     </head>
     <body>
         <p>Test</p>
+        <button onclick="deviceNativeShare">Download</button>
     </body>
 </html>
 
